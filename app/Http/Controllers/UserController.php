@@ -27,7 +27,7 @@ class UserController extends Controller
         $totalPage = ceil($totalData / $perPage);
         
         $data = User::where('id','!=',$myId)->where('role','=',$role)->offset($offset)->limit($perPage)->get();
-        // dd($role);
+
         return view('admin.user.index',compact('data','totalData','page','perPage','totalPage','role'));
     }
 
@@ -44,6 +44,12 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+            'full_name'=>'required',
+            'email'=>'required',
+            'password'=> 'required',
+            'role'=>'required'
+        ]);
         $user = new User();
         $user->name = $request->full_name;
         $user->email = $request->email;
