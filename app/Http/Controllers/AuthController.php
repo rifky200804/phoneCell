@@ -27,13 +27,20 @@ class AuthController extends Controller
             }else{
                 return redirect()->route('welcome');
             }
+        }else{
+            return back();
         }
     }
-    public function logout($role){
+    public function logout(){
+        $role = Auth::user()->role;
         Auth::logout();
         if($role == 'admin'){
-            return redirect();
+            return redirect('/admin/login');
         }
         return redirect()->route('welcome');
+    }
+
+    public function register(){
+            return view('auth.register');
     }
 }

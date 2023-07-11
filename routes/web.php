@@ -44,5 +44,7 @@ Route::group(['middleware'=>['auth']],function(){
 });
     
 Route::get('{role}/login',[AuthController::class,'login'])->name('login');
+Route::get('register',[AuthController::class,'register'])->name('register');
+// Route::get('postRegister',[AuthController::class,'postRegister'])->name('postRegister');
 Route::post('{role}/postlogin',[AuthController::class,'postlogin'])->name('postlogin');
-Route::get('{role}/logout',[AuthController::class,'logout'])->name('logout');
+Route::get('logout',[AuthController::class,'logout'])->name('logout');

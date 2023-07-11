@@ -27,7 +27,7 @@ class UserController extends Controller
         $totalPage = ceil($totalData / $perPage);
         
         $data = User::where('id','!=',$myId)->where('role','=',$role)->offset($offset)->limit($perPage)->get();
-
+        // dd($data);
         return view('admin.user.index',compact('data','totalData','page','perPage','totalPage','role'));
     }
 

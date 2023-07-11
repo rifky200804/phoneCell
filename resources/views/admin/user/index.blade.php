@@ -2,8 +2,6 @@
 
 @section('title',config('app.name')." | User")
 @section('content')
-    
-    @foreach ($data as $item => $value)
     <div class="container-fluid pt-4 px-4">
         <div class="bg-light rounded h-100 p-4">
             <h6>Data User {{$_GET['role']}}</h6>
@@ -83,5 +81,4 @@
             </div>
         </div>
     </div>
-    @endforeach
 @endsection
