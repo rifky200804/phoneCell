@@ -49,12 +49,10 @@ class ProductController extends Controller
         if (isset($_GET['brand']) && $_GET['brand'] != '') {
             $checkedBrand = $_GET['brand'];
             if(gettype($checkedBrand)== 'string'){
-                $checkedBrand = explode(',',$checkedBrand);
-                // dd($checkedBrand);
+                $checkedBrand = explode(',',$checkedBrand);   
             }else{
                 $checkedBrand = $checkedBrand;
             }
-            // dd($checkedBrand);
             $table = $table->whereIn('brands.name',$checkedBrand);
         }
         // dd($data);
