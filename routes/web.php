@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
@@ -45,6 +46,11 @@ Route::group(['middleware'=>['auth']],function(){
 
 Route::get('/shop',[ProductController::class,'index'])->name('shop');
 Route::get('/shop/{id}',[ProductController::class,'show'])->name('shop.show');
+
+Route::group(['prefix'=>'cart','as'=>'cart.'], function(){
+    Route::get('/',[CartController::class,'index']);
+    Route::post('/{id}',[CartController::class,'store']);
+});
 // auth
 Route::get('{role}/login',[AuthController::class,'login'])->name('login');
 Route::get('register',[AuthController::class,'register'])->name('register');

@@ -92,9 +92,11 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        //
+        $data = Product::find($id);
+        $categories = DB::table('categories')->get();
+        return view('shop.show',compact('data','categories')); 
     }
 
     /**

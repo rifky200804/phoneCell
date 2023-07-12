@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -26,9 +27,15 @@ class CartController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store($id,Request $request)
     {
-        //
+        $cart = new Cart();
+        $cart->product_id = $id;
+        $cart->user_id = Auth::user()->id;
+        $cart->quantity = $request->quantity;
+        $cart->save();
+
+        return redirect()->back();
     }
 
     /**
