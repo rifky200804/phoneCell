@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,9 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+Route::get('/', [DashboardController::class,'welcome'])->name('welcome');
 
 Route::get('/temp', function () {
     return view('layouts.app');
@@ -42,7 +41,11 @@ Route::group(['middleware'=>['auth']],function(){
         });
     });
 });
-    
+
+
+Route::get('/shop',[ProductController::class,'index'])->name('shop');
+Route::get('/shop/{id}',[ProductController::class,'show'])->name('shop.show');
+// auth
 Route::get('{role}/login',[AuthController::class,'login'])->name('login');
 Route::get('register',[AuthController::class,'register'])->name('register');
 // Route::get('postRegister',[AuthController::class,'postRegister'])->name('postRegister');

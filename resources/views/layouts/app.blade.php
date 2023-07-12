@@ -33,7 +33,7 @@
     @include('layouts.partial.header')
     {{-- header end --}}
 
-
+    @yield('content')
     <!-- Footer Start -->
     @include('layouts.partial.footer')    
     <!-- Footer End -->
