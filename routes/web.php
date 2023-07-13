@@ -58,6 +58,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/update/{id}', [CartController::class, 'update'])->name('update');
         Route::get('/destroy/{id}', [CartController::class, 'destroy'])->name('destroy');
     });
+
+    Route::group(['prefix' => 'checkourr', 'as' => 'checkourr.'], function () {
+        Route::get('/', [CartController::class, 'index'])->name('index');
+        Route::post('/', [CartController::class, 'store'])->name('store');
+    });
 });
 
 Route::group(['prefix' => 'shop', 'as' => 'shop.'], function () {

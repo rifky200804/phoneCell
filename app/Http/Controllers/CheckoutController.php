@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Checkout;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Cart;
 
 class CheckoutController extends Controller
 {
@@ -28,7 +30,23 @@ class CheckoutController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $myId = Auth::user()->id;
+        $cart = Cart::where('user_id','=',$myId);
+        $getCart = $cart->get();
+        $processCode = time();
+        dd($getCart,$processCode);
+        foreach($getCart as $item => $value){
+            $checkout = new Checkout();
+            $checkout->processCode = $processCode;
+            $checkout->shipping = $request->shipping;
+            $checkout->subTotal = $request->subTotal;
+            $checkout->product_id = $value->product_id;
+            $checkout->user_id = $myId;
+            $checkout->status = 'Menunggu Pembayaran';
+            $checkout->save();
+        }
+        return redirect()->route('welcome');
+        
     }
 
     /**

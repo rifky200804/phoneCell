@@ -83,7 +83,7 @@
                     </div>
                     <div class="d-flex justify-content-between">
                         <h6 class="font-weight-medium">Shipping</h6>
-                        @php $shipping = ($subTotal / 10);  @endphp
+                        @php $shipping = ($subTotal * (10/100));  @endphp
                         <h6 class="font-weight-medium">Rp. {{number_format ($shipping,2,',','.')}}</h6>
                     </div>
                 </div>
@@ -93,7 +93,11 @@
                         <h5>Total</h5>
                         <h5>Rp. {{number_format($total,2,',','.')}}</h5>
                     </div>
-                    <button class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</button>
+                    <form action="" method="post">
+                        <input type="hidden" name="shipping" value="{{$shipping}}">
+                        <input type="hidden" name="subTotal" value="{{$subTotal}}">
+                        <button class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</button>
+                    </form>
                 </div>
             </div>
         </div>
