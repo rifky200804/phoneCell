@@ -22,7 +22,7 @@
                         <input type="hidden" name="categories" value="{{$_GET['categories']}}">
                     @endif
                     @if(isset($_GET['brand']) && $_GET['brand'] != "")
-                        <input type="hidden" name="categories" value="{{$strBrand}}">
+                        <input type="hidden" name="brand" value="{{$strBrand}}">
                     @endif
                     <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
                         <input type="radio" name="price" value="0-1jt" class="custom-control-input" id="price-1" @if(isset($_GET['price']) && $_GET['price'] == '0-1jt') checked  @endif>
@@ -97,9 +97,9 @@
                             <div class="btn-group ml-2">
                                 <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Showing</button>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">10</a>
-                                    <a class="dropdown-item" href="#">20</a>
-                                    <a class="dropdown-item" href="#">30</a>
+                                    <a class="dropdown-item" href="{{url('/shop?'."size=10")}} @if(isset($_GET['categories'])) {{'&categories='.$_GET['categories']}} @endif @if(isset($_GET['brand'])) {{'&brand='.$strBrand}} @endif @if(isset($_GET['price'])) {{'&price='.$_GET['price']}} @endif">10</a>
+                                    <a class="dropdown-item" href="{{url('/shop?'."size=20")}} @if(isset($_GET['categories'])) {{'&categories='.$_GET['categories']}} @endif @if(isset($_GET['brand'])) {{'&brand='.$strBrand}} @endif @if(isset($_GET['price'])) {{'&price='.$_GET['price']}} @endif">20</a>
+                                    <a class="dropdown-item" href="{{url('/shop?'."size=30")}} @if(isset($_GET['categories'])) {{'&categories='.$_GET['categories']}} @endif @if(isset($_GET['brand'])) {{'&brand='.$strBrand}} @endif @if(isset($_GET['price'])) {{'&price='.$_GET['price']}} @endif">30</a>
                                 </div>
                             </div>
                         </div>
