@@ -30,6 +30,9 @@
                 <a href="{{ route('category.index') }}"
                     class="nav-item nav-link @if (Request::url() == route('category.index')) active @endif"><i
                         class="fa fa-tachometer-alt me-2"></i>Category</a>
+                <a href="{{ route('brand.index') }}"
+                    class="nav-item nav-link @if (Request::url() == route('brand.index')) active @endif"><i
+                        class="fa fa-tachometer-alt me-2"></i>Brand</a>
 
             </div>
             {{-- <a href="{{route('user.index')}}" class="nav-item nav-link @if (Request::url() == route('user.index')) active @endif"><i class="fa fa-user-alt me-2"></i>User</a> --}}

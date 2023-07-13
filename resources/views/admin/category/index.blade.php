@@ -5,7 +5,7 @@
     <div class="container-fluid pt-4 px-4">
         <div class="bg-light rounded h-100 p-4">
             <h6>Data Categories</h6>
-            <a href="{{route('category.create')}}">Create User</a>
+            <a href="{{route('category.create')}}">Create Category</a>
             <div class="table-responsive">
                 <table class="table">
                     <thead>

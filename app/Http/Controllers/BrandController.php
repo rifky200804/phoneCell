@@ -12,7 +12,19 @@ class BrandController extends Controller
      */
     public function index()
     {
-        //
+        
+        $totalData = Brand::count();
+
+        $perPage = 1; 
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+        $currentPage = $page - 1;
+        $offset = ($page - 1) * $perPage;
+        
+        $totalPage = ceil($totalData / $perPage);
+        
+        $data = Brand::offset($offset)->limit($perPage)->get();
+        // dd($data);
+        return view('admin.brand.index',compact('data','totalPage','page','totalData'));
     }
 
     /**
@@ -20,7 +32,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.brand.create');
     }
 
     /**
@@ -28,7 +40,17 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'name'=>'required',
+            
+        ]);
+        $category = new Brand();
+        $category->name = $request->name;
+        
+        $category->save();
+
+        
+        return redirect('/admin/brand');
     }
 
     /**
@@ -58,8 +80,11 @@ class BrandController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Brand $brand)
+    public function destroy($id)
     {
-        //
+        $category  = Brand::find($id);
+        $category->delete();
+        
+        return redirect('/admin/brand');
     }
 }
