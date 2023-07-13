@@ -12,7 +12,18 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $totalData = Category::count();
+
+        $perPage = 1; 
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+        $currentPage = $page - 1;
+        $offset = ($page - 1) * $perPage;
+        
+        $totalPage = ceil($totalData / $perPage);
+        
+        $data = Category::offset($offset)->limit($perPage)->get();
+        // dd($data);
+        return view('admin.category.index',compact('data','totalPage','page','totalData'));
     }
 
     /**
@@ -20,7 +31,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.category.create');   
     }
 
     /**
@@ -28,7 +39,17 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'name'=>'required',
+            
+        ]);
+        $category = new Category();
+        $category->name = $request->name;
+        
+        $category->save();
+
+        
+        return redirect('/admin/category');
     }
 
     /**
@@ -58,8 +79,11 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        //
+        $category  = Category::find($id);
+        $category->delete();
+        
+        return redirect('/admin/category');
     }
 }
