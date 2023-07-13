@@ -93,7 +93,7 @@
                         <h5>Total</h5>
                         <h5>Rp. {{number_format($total,2,',','.')}}</h5>
                     </div>
-                    <form action="" method="post">
+                    <form action="{{route('checkout.store')}}" method="post">
                         <input type="hidden" name="shipping" value="{{$shipping}}">
                         <input type="hidden" name="subTotal" value="{{$subTotal}}">
                         <button class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</button>

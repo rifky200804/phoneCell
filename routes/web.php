@@ -59,7 +59,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/destroy/{id}', [CartController::class, 'destroy'])->name('destroy');
     });
 
-    Route::group(['prefix' => 'checkourr', 'as' => 'checkourr.'], function () {
+    Route::group(['prefix' => 'checkout', 'as' => 'checkourr.'], function () {
         Route::get('/', [CartController::class, 'index'])->name('index');
         Route::post('/', [CartController::class, 'store'])->name('store');
     });
