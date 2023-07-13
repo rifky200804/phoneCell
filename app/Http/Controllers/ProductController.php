@@ -57,7 +57,7 @@ class ProductController extends Controller
         }
         // dd($data);
         $totalData= $table->count();
-        $perPage = isset($_GET['size']) ? $_GET['size'] : 1 ; 
+        $perPage = isset($_GET['size']) ? $_GET['size'] : 10; 
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
         $currentPage = $page - 1;
         $offset = ($page - 1) * $perPage;

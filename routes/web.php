@@ -41,16 +41,20 @@ Route::group(['middleware'=>['auth']],function(){
             Route::get('/delete/{id}',[UserController::class,'destroy'])->name('destroy');
         });
     });
+    
+    Route::group(['prefix'=>'cart','as'=>'cart.'], function(){
+        Route::get('/',[CartController::class,'index'])->name('index');
+        Route::post('/{id}',[CartController::class,'store'])->name('store');
+        Route::put('/update/{id}',[CartController::class,'update'])->name('update');
+        Route::get('/destroy/{id}',[CartController::class,'destroy'])->name('destroy');
+    });
 });
 
-
-Route::get('/shop',[ProductController::class,'index'])->name('shop');
-Route::get('/shop/{id}',[ProductController::class,'show'])->name('shop.show');
-
-Route::group(['prefix'=>'cart','as'=>'cart.'], function(){
-    Route::get('/',[CartController::class,'index']);
-    Route::post('/{id}',[CartController::class,'store']);
+Route::group(['prefix'=>'shop', 'as'=> 'shop.'],function (){
+    Route::get('/',[ProductController::class,'index'])->name('index');
+    Route::get('/{id}',[ProductController::class,'show'])->name('show');
 });
+
 // auth
 Route::get('{role}/login',[AuthController::class,'login'])->name('login');
 Route::get('register',[AuthController::class,'register'])->name('register');

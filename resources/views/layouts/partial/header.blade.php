@@ -63,7 +63,9 @@
 </div>
 <!-- Topbar End -->
 
-
+@php
+    $categories = DB::table('categories')->get();
+@endphp
 <!-- Navbar Start -->
 <div class="container-fluid bg-dark mb-30">
     <div class="row px-xl-5">
@@ -92,12 +94,21 @@
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
                         <a href="{{route('welcome')}}" class="nav-item nav-link @if(Request::url() == route('welcome')) active @endif">Home</a>
-                        <a href="{{route('shop')}}" class="nav-item nav-link @if(Request::url() == route('shop')) active @endif">Shop</a>       
+                        <a href="{{route('shop.index')}}" class="nav-item nav-link @if(Request::url() == route('shop.index')) active @endif">Shop</a>       
                     </div>
                     <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
-                        <a href="" class="btn px-0 ml-3">
+                        <a href="{{url('/cart')}}" class="btn px-0 ml-3">
                             <i class="fas fa-shopping-cart text-primary"></i>
-                            <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
+                            <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">
+                                @if(isset(Auth::user()->id))
+                                    @php
+                                        $count = DB::table('carts')->where('user_id','=',Auth::user()->id)->count();
+                                    @endphp
+                                    {{$count}}
+                                @else
+                                    0
+                                @endif
+                            </span>
                         </a>
                     </div>
                 </div>

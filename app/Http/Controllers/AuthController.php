@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\DB;
 class AuthController extends Controller
 {
     public function login($role,Request $request){
@@ -15,13 +15,19 @@ class AuthController extends Controller
         }
     }
     public function postlogin($role,Request $request){
-        // dd($request);
         $this->validate($request,[
             'email'=>'required',
             'password'=>'required'
         ]);
+        if($role == 'user'){
+            $role = 'pelanggan';
+        }
+        $user = DB::table('users')->where('role','=',$role)->where('email','=',$request->email)->first();
+        // dd($user);
+        if($user == null){
+            return redirect()->route('login',$role)->with('errorMessage','Failed To Login');
+        }
         if(Auth::attempt($request->only('email','password'))){
-        
             if($role == 'admin'){
                 return redirect()->route('admin.dashboard');
             }else{

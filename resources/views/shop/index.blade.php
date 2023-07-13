@@ -94,14 +94,6 @@
                             <button class="btn btn-sm btn-light ml-2"><i class="fa fa-bars"></i></button>
                         </div>
                         <div class="ml-2">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Sorting</button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Latest</a>
-                                    <a class="dropdown-item" href="#">Popularity</a>
-                                    <a class="dropdown-item" href="#">Best Rating</a>
-                                </div>
-                            </div>
                             <div class="btn-group ml-2">
                                 <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Showing</button>
                                 <div class="dropdown-menu dropdown-menu-right">
@@ -119,8 +111,14 @@
                         <div class="product-img position-relative overflow-hidden">
                             <img class="img-fluid w-100" src="{{asset('layouts/img/product-1.jpg')}}" alt="">
                             <div class="product-action">
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href="{{route('shop.show',$value->id)}}"><i class="fa fa-search"></i></a>
+                                <form action="{{url('/cart/'.$value->id)}}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button type="submit" class="btn btn-outline-dark btn-square">
+                                        <i class="fa fa-shopping-cart"></i>
+                                    </button>
+                                </form>
+                                    <a class="btn btn-outline-dark btn-square" href="{{route('shop.show',$value->id)}}"><i class="fa fa-search"></i></a>
                             </div>
                         </div>
                         <div class="text-center py-4">

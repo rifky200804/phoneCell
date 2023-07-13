@@ -50,6 +50,11 @@
               </div>
 
               <button type="submit" class="btn btn-block btn-primary">Login</button>
+              <a href="{{route('login','admin')}}" class="btn btn-block btn-secondary">
+                <label for="" style="color:white;">
+                  Login as Admin
+                </label>
+              </a>
 
             </form>
           </div>

@@ -7,7 +7,7 @@
             <div class="col-12">
                 <nav class="breadcrumb bg-light mb-30">
                     <a class="breadcrumb-item text-dark" href="{{route('welcome')}}">Home</a>
-                    <a class="breadcrumb-item text-dark" href="{{route('shop')}}">Shop</a>
+                    <a class="breadcrumb-item text-dark" href="{{route('shop.index')}}">Shop</a>
                     <span class="breadcrumb-item active">{{$data->name}}</span>
                 </nav>
             </div>

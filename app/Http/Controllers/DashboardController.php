@@ -13,7 +13,7 @@ class DashboardController extends Controller
     }
 
     public function welcome(Request $request){
-        $categories = DB::table('categories')->get();
+        // $categories = DB::table('categories')->get();
         $queryCategoryTotal = "
                     SELECT a.name as name_category,COUNT(b.name) as total_product FROM categories as a
                     JOIN products as b ON a.id = b.categories_id
@@ -24,6 +24,6 @@ class DashboardController extends Controller
 
         $products =  Product::orderBy('id','desc')->limit(10)->get();
         // dd($products);
-        return view('welcome',compact('categoryTotal','products','categories'));
+        return view('welcome',compact('categoryTotal','products'));
     }
 }

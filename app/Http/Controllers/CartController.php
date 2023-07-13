@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
@@ -13,7 +14,14 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+        $data = DB::table('carts as a')
+                ->join('products as b','a.product_id','=','b.id')
+                ->select('a.*','b.name as name_product','b.price as price','b.foto as foto')
+                ->where('a.user_id','=',Auth::user()->id)
+                ->get();
+        // dd($data);
+        return view('shop.cart',compact('data'));
+        
     }
 
     /**
@@ -51,22 +59,27 @@ class CartController extends Controller
      */
     public function edit(Cart $cart)
     {
-        //
+        // 
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Cart $cart)
+    public function update(Request $request, $id)
     {
-        //
+        $cart = Cart::find($id);
+        $cart->quantity = $request->quantity;
+        $cart->save();
+        return redirect()->back();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Cart $cart)
+    public function destroy($id)
     {
-        //
+        $cart = Cart::find($id);
+        $cart->delete();
+        return redirect()->back(); 
     }
 }
