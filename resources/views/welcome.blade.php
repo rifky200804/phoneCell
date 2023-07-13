@@ -35,7 +35,13 @@
                 <div class="product-img position-relative overflow-hidden">
                     <img class="img-fluid w-100" src="{{asset('layouts/img/product-1.jpg')}}" alt="">
                     <div class="product-action">
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                        <form action="{{url('/cart/'.$value->id)}}" method="POST">
+                            @csrf
+                            <input type="hidden" name="quantity" value="1">
+                            <button type="submit" class="btn btn-outline-dark btn-square">
+                                <i class="fa fa-shopping-cart"></i>
+                            </button>
+                        </form>
                         <a class="btn btn-outline-dark btn-square" href="{{route('shop.show',$value->id)}}"><i class="fa fa-search"></i></a>
                     </div>
                 </div>

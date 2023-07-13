@@ -74,6 +74,7 @@ class UserController extends Controller
         $role = $user->role;
         // dd($user);
         $data = userDetail::where('user_id','=',$user->id)->first();
+        // dd($data);
 
         return view('admin.user.show',compact('data','role'));
     }
@@ -110,6 +111,8 @@ class UserController extends Controller
         // dd($user);
         $user  = User::find($id);
         $user->delete();
+        $userDetail  = UserDetail::where('user_id','=',$id);
+        $userDetail->delete();
         return redirect('/admin/user?role='.$role);
     }
 }

@@ -35,8 +35,12 @@
               </div>
               <form action="#" method="post">
                 <div class="form-group first">
-                  <label for="username">Username</label>
-                  <input type="text" class="form-control" placeholder="your-email@gmail.com" id="username">
+                  <label for="full_name">Full Name</label>
+                  <input type="text" name="full_name" class="form-control" placeholder="Your Name" id="full_name">
+                </div>
+                <div class="form-group first">
+                  <label for="email">Email</label>
+                  <input type="text" name="email" class="form-control" placeholder="your-email@gmail.com" id="email">
                 </div>
                 <div class="form-group last mb-3">
                   <label for="password">Password</label>

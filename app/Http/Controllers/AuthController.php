@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
 class AuthController extends Controller
 {
     public function login($role,Request $request){
@@ -38,15 +41,26 @@ class AuthController extends Controller
         }
     }
     public function logout(){
-        $role = Auth::user()->role;
         Auth::logout();
-        if($role == 'admin'){
-            return redirect('/admin/login');
-        }
         return redirect()->route('welcome');
     }
 
     public function register(){
             return view('auth.register');
+    }
+    public function postRegister(Request $request){
+        $this->validate($request,[
+            'full_name'=>'required',
+            'email'=>'required',
+            'password'=> 'required',
+            'role'=>'required'
+        ]);
+        $user = new User();
+        $user->name = $request->full_name;
+        $user->email = $request->email;
+        $user->role = $request->role;
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return redirect()->back();
     }
 }
