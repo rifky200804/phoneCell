@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserDetail;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserDetailController extends Controller
@@ -34,25 +35,49 @@ class UserDetailController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(UserDetail $userDetail)
+    public function show($id)
     {
-        //
+        $data = UserDetail::find($id);
+        return view('myProfile',compact('data'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(UserDetail $userDetail)
+    public function edit($id)
     {
-        //
+        $data = UserDetail::find($id);
+        dd($data);
+        return view('admin.user.edit',compact('data'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, UserDetail $userDetail)
+    public function update(Request $request,$id)
     {
-        //
+        $userDetail = UserDetail::find($id);
+        if(isset($request->full_name)){
+            $userDetail->full_name = $request->full_name;
+            $user = User::find($userDetail->user_id);
+            $user->name = $request->full_name;
+            $user->save();
+        }
+        if(isset($request->place_of_birth)){
+            $userDetail->place_of_birth = $request->place_of_birth;
+        }
+        if(isset($request->date_of_birth)){
+            $userDetail->date_of_birth = $request->date_of_birth;
+        }
+        if(isset($request->address)){
+            $userDetail->address = $request->address;
+        }
+        if(isset($request->profile)){
+            $nameFile = $request->profile."_".time();
+            $userDetail->profile = $nameFile;
+        }
+        $userDetail->save();
+        return redirect()->back();
     }
 
     /**

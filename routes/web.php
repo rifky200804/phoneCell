@@ -8,6 +8,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserDetailController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +33,8 @@ Route::get('/admin/temp', function () {
 });
 
 Route::group(['middleware' => ['auth']], function () {
+    Route::get('myProfile/{id}', [UserDetailController::class, 'show'])->name('myProfile');
+    Route::put('myProfile/{id}', [UserDetailController::class, 'update'])->name('myProfile.update');
     Route::group(['prefix' => 'admin'], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
         Route::group(['prefix' => 'user', 'as' => 'user.'], function () {

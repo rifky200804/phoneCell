@@ -19,8 +19,6 @@ class ProductController extends Controller
                     ->join('brands','products.categories_id','=','brands.id')
                     ->where('stok','>',0);
         
-        
-        
         if(isset($_GET['price'])){
             $price = $_GET['price'];
             // dd($price);
