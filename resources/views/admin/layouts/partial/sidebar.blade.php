@@ -27,6 +27,9 @@
                     <a href="{{ url('/admin/user?role=admin') }}" class="dropdown-item">Admin</a>
                     <a href="{{ url('/admin/user?role=pelanggan') }}" class="dropdown-item">Pelanggan</a>
                 </div>
+                <a href="{{ route('product.index') }}"
+                    class="nav-item nav-link @if (Request::url() == route('product.index')) active @endif"><i
+                        class="fa fa-tachometer-alt me-2"></i>Product</a>
                 <a href="{{ route('category.index') }}"
                     class="nav-item nav-link @if (Request::url() == route('category.index')) active @endif"><i
                         class="fa fa-tachometer-alt me-2"></i>Category</a>
