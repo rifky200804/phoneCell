@@ -134,6 +134,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
+        $user = Product::find($id)->first();
+        // dd($user);
+        
         $data = DB::table('products')
         ->select('products.*','categories.name as name_category','brands.name as name_brand','brands.id as brand_id')
         ->join('categories','products.categories_id','=','categories.id')
@@ -141,22 +144,36 @@ class ProductController extends Controller
         ->where('id','=',$id);
         $categories = DB::table('categories')->get();
         $brands = DB::table('brands')->get();
-        return view('shop.edit', compact('data', 'categories','brands'));
+        return view('admin.product.edit', compact('user', 'data', 'categories','brands'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request,$id)
     {
-        //
+        $product = Product::find($id);
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->stok = $request->stok;
+        $product->description = $request->description;
+        // $product->foto = $request->foto;
+        $product->brand_id = (int) $request->brand;
+        $product->categories_id = $request->category;
+
+        // dd($product);
+        $product->save();
+        return back();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        $product  = Product::find($id);
+        $product->delete();
+        
+        return redirect('/admin/product');
     }
 }
