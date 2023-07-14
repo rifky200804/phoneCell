@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
@@ -49,6 +50,15 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('edit');
             Route::put('/update/{id}', [CategoryController::class, 'update'])->name('update');
             Route::get('/delete/{id}', [CategoryController::class, 'destroy'])->name('destroy');
+        });
+        Route::group(['prefix' => 'brand', 'as' => 'brand.'], function () {
+            Route::get('/', [BrandController::class, 'index'])->name('index');
+            Route::get('/create', [BrandController::class, 'create'])->name('create');
+            Route::post('/', [BrandController::class, 'store'])->name('store');
+            Route::get('/{id}', [BrandController::class, 'show'])->name('show');
+            Route::get('/edit/{id}', [BrandController::class, 'edit'])->name('edit');
+            Route::put('/update/{id}', [BrandController::class, 'update'])->name('update');
+            Route::get('/delete/{id}', [BrandController::class, 'destroy'])->name('destroy');
         });
     });
 
