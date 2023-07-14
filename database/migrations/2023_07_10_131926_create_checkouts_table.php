@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('checkouts', function (Blueprint $table) {
             $table->id();
+            $table->integer('processCode');
+            $table->string(('shipping'));
+            $table->bigInteger('subTotal');
+            $table->integer('product_id');
+            $table->integer('user_id');
+            $table->string('status');
             $table->timestamps();
         });
     }
