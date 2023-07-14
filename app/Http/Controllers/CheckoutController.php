@@ -34,7 +34,6 @@ class CheckoutController extends Controller
         $cart = Cart::where('user_id','=',$myId);
         $getCart = $cart->get();
         $processCode = time();
-        dd($getCart,$processCode);
         foreach($getCart as $item => $value){
             $checkout = new Checkout();
             $checkout->processCode = $processCode;
@@ -45,6 +44,7 @@ class CheckoutController extends Controller
             $checkout->status = 'Menunggu Pembayaran';
             $checkout->save();
         }
+        $cart->delete();
         return redirect()->route('welcome');
         
     }

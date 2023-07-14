@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
@@ -60,8 +61,8 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::group(['prefix' => 'checkout', 'as' => 'checkout.'], function () {
-        Route::get('/', [CartController::class, 'index'])->name('index');
-        Route::post('/', [CartController::class, 'store'])->name('store');
+        Route::get('/', [CheckoutController::class, 'index'])->name('index');
+        Route::post('/', [CheckoutController::class, 'store'])->name('store');
     });
 });
 
