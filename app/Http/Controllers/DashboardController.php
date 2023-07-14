@@ -17,6 +17,7 @@ class DashboardController extends Controller
         $queryCategoryTotal = "
                     SELECT a.name as name_category,COUNT(b.name) as total_product FROM categories as a
                     JOIN products as b ON a.id = b.categories_id
+                    WHERE b.stok > 0
                     GROUP BY name_category
                     ORDER BY name_category ASC
                 ";

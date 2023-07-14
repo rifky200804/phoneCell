@@ -17,13 +17,10 @@ class ProductController extends Controller
     public function index()
     {
         $table = DB::table('products')
-            ->select('products.*', 'categories.name as name_category', 'brands.name as name_brand', 'brands.id as brand_id')
-            ->join('categories', 'products.categories_id', '=', 'categories.id')
-            ->join('brands', 'products.categories_id', '=', 'brands.id')
-            ->where('stok', '>', 0);
-
-
-
+                    ->select('products.*','categories.name as name_category','brands.name as name_brand','brands.id as brand_id')
+                    ->join('categories','products.categories_id','=','categories.id')
+                    ->join('brands','products.categories_id','=','brands.id')
+                    ->where('stok','>',0);
         if (isset($_GET['price'])) {
             $price = $_GET['price'];
             // dd($price);

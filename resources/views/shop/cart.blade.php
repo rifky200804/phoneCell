@@ -31,6 +31,7 @@
                 <tbody class="align-middle">
                     @php
                         $subTotal = 0;
+                        $totalBarang = 0;
                     @endphp
                     @foreach ($data as $item => $value)
                     <tr>
@@ -60,7 +61,8 @@
                         <td class="align-middle"><a class="btn btn-sm btn-danger" href="{{route('cart.destroy',$value->id)}}"><i class="fa fa-times"></i></a></td>
                         </form>
                     </tr>
-                    @php $subTotal += $totalPrice @endphp
+                    @php $subTotal += $totalPrice; $totalBarang+=$value->quantity; @endphp
+
                     @endforeach
                 </tbody>
             </table>
@@ -83,7 +85,7 @@
                     </div>
                     <div class="d-flex justify-content-between">
                         <h6 class="font-weight-medium">Shipping</h6>
-                        @php $shipping = ($subTotal * (10/100));  @endphp
+                        @php $shipping = ($totalBarang * 30000);  @endphp
                         <h6 class="font-weight-medium">Rp. {{number_format ($shipping,2,',','.')}}</h6>
                     </div>
                 </div>
@@ -97,7 +99,7 @@
                         @csrf
                         <input type="hidden" name="shipping" value="{{$shipping}}">
                         <input type="hidden" name="subTotal" value="{{$subTotal}}">
-                        <button class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</button>
+                        <button class="btn btn-block btn-primary font-weight-bold my-3 py-3">Procesed To Checkout</button>
                     </form>
                 </div>
             </div>
