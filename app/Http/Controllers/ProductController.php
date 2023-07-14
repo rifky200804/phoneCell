@@ -45,6 +45,7 @@ class ProductController extends Controller
         if (isset($_GET['categories']) && $_GET['categories'] != '') {
             $table = $table->where('categories.name', '=', $_GET['categories']);
         }
+        $checkedBrand = [];
         if (isset($_GET['brand']) && $_GET['brand'] != '') {
             $checkedBrand = $_GET['brand'];
             if (gettype($checkedBrand) == 'string') {
