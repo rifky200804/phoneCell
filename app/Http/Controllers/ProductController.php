@@ -8,7 +8,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-
+Use Alert;
 class ProductController extends Controller
 {
     /**
@@ -88,16 +88,15 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        // $this->validate($request,[
-        //     'name'=>'required',
-        //     'price'=>'required',
-        //     'stok'=>'required',
-        //     'description'=>'required',
-        //     // 'foto'=>'required',
-        //     'brand_id'=>'required',
-        //     'categories'=>'required'
-        // ]);
+        $this->validate($request,[
+            'name'=>'required',
+            'price'=>'required',
+            'stok'=>'required',
+            'description'=>'required',
+            // 'foto'=>'required',
+            'brand'=>'required',
+            'categories'=>'required'
+        ]);
         $product = new Product();
         $product->name = $request->name;
         $product->price = $request->price;
@@ -105,12 +104,12 @@ class ProductController extends Controller
         $product->description = $request->description;
         // $product->foto = $request->foto;
         $product->brand_id = (int) $request->brand;
-        $product->categories_id = $request->category;
-
+        $product->categories_id = $request->category;        
         // dd($product);
         $product->save();
 
-        
+        Alert::success('Success', 'Successfully Added Product');
+
         return redirect('/admin/product');
     }
 
@@ -123,9 +122,10 @@ class ProductController extends Controller
         ->select('products.*','categories.name as name_category','brands.name as name_brand','brands.id as brand_id')
         ->join('categories','products.categories_id','=','categories.id')
         ->join('brands','products.categories_id','=','brands.id')
-        ->where('id','=',$id);
+        ->where('products.id','=',$id)->first();
         $categories = DB::table('categories')->get();
         $brands = DB::table('brands')->get();
+        // dd($data);
         return view('shop.show', compact('data', 'categories','brands'));
     }
 
@@ -134,17 +134,14 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $user = Product::find($id)->first();
-        // dd($user);
-        
         $data = DB::table('products')
         ->select('products.*','categories.name as name_category','brands.name as name_brand','brands.id as brand_id')
         ->join('categories','products.categories_id','=','categories.id')
         ->join('brands','products.categories_id','=','brands.id')
-        ->where('id','=',$id);
+        ->where('products.id','=',$id)->first();
         $categories = DB::table('categories')->get();
         $brands = DB::table('brands')->get();
-        return view('admin.product.edit', compact('user', 'data', 'categories','brands'));
+        return view('admin.product.edit', compact('data', 'categories','brands'));
     }
 
     /**
@@ -163,7 +160,9 @@ class ProductController extends Controller
 
         // dd($product);
         $product->save();
-        return back();
+        Alert::success('Success', 'Successfully Update Product');
+
+        return redirect()->route('product.index');
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UserDetail;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Alert;
 
 class UserDetailController extends Controller
 {
@@ -47,7 +48,6 @@ class UserDetailController extends Controller
     public function edit($id)
     {
         $data = UserDetail::find($id);
-        dd($data);
         return view('admin.user.edit',compact('data'));
     }
 
@@ -77,6 +77,7 @@ class UserDetailController extends Controller
             $userDetail->profile = $nameFile;
         }
         $userDetail->save();
+        Alert::success('Success', 'Successfully Update Datas');
         return redirect()->back();
     }
 

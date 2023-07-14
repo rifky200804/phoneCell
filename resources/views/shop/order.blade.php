@@ -15,103 +15,173 @@
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="tab-pane-1">
                             <h4 class="mb-3">Waiting for payment</h4>
-                            <table class="table table-light table-borderless table-hover text-center mb-0">
+                            @foreach($processCodeWaiting as $data => $item)
+                            {{-- {{dd($item->shipping)}} --}}
+                            <table class="table table-light table-borderless table-hover text-center mb-4">
                                 <thead class="thead-dark">
                                     <tr>
                                         <th>Products</th>
                                         <th>Price</th>
                                         <th>Quantity</th>
+                                        <th>Shipping</th>
                                         <th>Total</th>
                                     </tr>
                                 </thead>
                                 <tbody class="align-middle">
-                                    @foreach ($waiting as $item => $value)
+                                    <?php $quantity = 0 ?>
+                                    <?php foreach($waiting as $waitingItem => $value) : ?>
+                                    @if ($item->processCode == $value->processCode)
                                     <tr>
                                         <td class="align-middle"><img src="{{asset('layouts/img/product-1.jpg')}}" alt="" style="width: 50px;">{{$value->name_product}}</td>
                                         <td class="align-middle">Rp. {{number_format($value->price,2,',','.')}}</td>
                                         <td class="align-middle">{{$value->quantity}}</td>
-                                        <td class="align-middle">{{number_format(($value->price * $value->quantity),2,',','.')}}</td>
+                                        <td class="align-middle">Rp. {{number_format((($value->quantity * 30000)),2,',','.')}}</td>
+                                        <td class="align-middle">{{number_format(($value->price * $value->quantity + ($value->quantity * 30000)),2,',','.')}}</td>
                                     </tr>
-                                    @endforeach
+                                    <?php $quantity += $value->quantity ?>
+                                    @endif
+                                    <?php endforeach; ?>
                                 </tbody>
+                            {{-- {{dd($item->shipping)}} --}}
+
+                                <tfoot class="">
+                                    <tr>
+                                        <th colspan="">Total</th>
+                                        <th></th>
+                                        <th>{{$quantity}}</th>
+                                        <th>Rp. {{number_format($item->shipping,2,',','.')}}</th>
+                                        <th>Rp. {{number_format(($item->subTotal + $item->shipping),2,',','.')}}</th>
+                                    </tr>
+                                </tfoot>
                             </table>
+                            <hr>
+                            @endforeach
                         </div>
                         <div class="tab-pane fade" id="tab-pane-2">
                             <h4 class="mb-3">Packed</h4>
-                            <table class="table table-light table-borderless table-hover text-center mb-0">
+                            @foreach($processCodePacked as $data => $item)
+                            <table class="table table-light table-borderless table-hover text-center mb-4">
                                 <thead class="thead-dark">
                                     <tr>
                                         <th>Products</th>
                                         <th>Price</th>
                                         <th>Quantity</th>
+                                        <th>Shipping</th>
                                         <th>Total</th>
                                     </tr>
                                 </thead>
                                 <tbody class="align-middle">
-                                    @foreach ($packed as $item => $value)
+                                    <?php $quantity = 0 ?>
+                                    <?php foreach($packed as $packedItem => $value) : ?>
+                                    @if ($item->processCode == $value->processCode)
                                     <tr>
                                         <td class="align-middle"><img src="{{asset('layouts/img/product-1.jpg')}}" alt="" style="width: 50px;">{{$value->name_product}}</td>
                                         <td class="align-middle">Rp. {{number_format($value->price,2,',','.')}}</td>
                                         <td class="align-middle">{{$value->quantity}}</td>
-                                        <td class="align-middle">{{number_format(($value->price * $value->quantity),2,',','.')}}</td>
+                                        <td class="align-middle">Rp. {{number_format((($value->quantity * 30000)),2,',','.')}}</td>
+                                        <td class="align-middle">{{number_format(($value->price * $value->quantity + ($value->quantity * 30000)),2,',','.')}}</td>
                                     </tr>
-                                    @endforeach
+                                    <?php $quantity += $value->quantity ?>
+                                    @endif
+                                    <?php endforeach; ?>
                                 </tbody>
+                                <tfoot class="">
+                                    <tr>
+                                        <th colspan="">Total</th>
+                                        <th></th>
+                                        <th>{{$quantity}}</th>
+                                        <th>Rp. {{number_format($item->subTotal,2,',','.')}}</th>
+                                        <th>Rp. {{number_format(($item->subTotal + $item->shipping),2,',','.')}}</th>
+                                    </tr>
+                                </tfoot>
                             </table>
+                            <hr>
+                            @endforeach
                         </div>
                         <div class="tab-pane fade" id="tab-pane-3">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h4 class="mb-4">In Delivery</h4>
-                                    <table class="table table-light table-borderless table-hover text-center mb-0">
+                                    <h4 class="mb-3">In Delivery</h4>
+                                    @foreach($processCodeDelivery as $data => $item)
+                                    <table class="table table-light table-borderless table-hover text-center mb-4">
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th>Products</th>
                                                 <th>Price</th>
                                                 <th>Quantity</th>
+                                                <th>Shipping</th>
                                                 <th>Total</th>
                                             </tr>
                                         </thead>
                                         <tbody class="align-middle">
-                                            @foreach ($delivery as $item => $value)
+                                            <?php $quantity = 0 ?>
+                                            <?php foreach($delivery as $deliveryItem => $value) : ?>
                                             <tr>
                                                 <td class="align-middle"><img src="{{asset('layouts/img/product-1.jpg')}}" alt="" style="width: 50px;">{{$value->name_product}}</td>
                                                 <td class="align-middle">Rp. {{number_format($value->price,2,',','.')}}</td>
                                                 <td class="align-middle">{{$value->quantity}}</td>
-                                                <td class="align-middle">{{number_format(($value->price * $value->quantity),2,',','.')}}</td>
+                                                <td class="align-middle">Rp. {{number_format((($value->quantity * 30000)),2,',','.')}}</td>
+                                                <td class="align-middle">{{number_format(($value->price * $value->quantity + ($value->quantity * 30000)),2,',','.')}}</td>
                                             </tr>
-                                            @endforeach
+                                            <?php $quantity += $value->quantity ?>
+                                            <?php endforeach; ?>
                                         </tbody>
+                                        <tfoot class="">
+                                            <tr>
+                                                <th colspan="">Total</th>
+                                                <th></th>
+                                                <th>{{$quantity}}</th>
+                                                <th>Rp. {{number_format($item->shipping,2,',','.')}}</th>
+                                                <th>Rp. {{number_format(($item->subTotal + $item->shipping),2,',','.')}}</th>
+                                            </tr>
+                                        </tfoot>
                                     </table>
+                                    <hr>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="tab-pane-4">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h4 class="mb-4">Finished"</h4>
-                                    <table class="table table-light table-borderless table-hover text-center mb-0">
+                                    <h4 class="mb-4">Finished</h4>
+                                    @foreach($processCodeFinished as $data => $item)
+                                    <table class="table table-light table-borderless table-hover text-center mb-4">
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th>Products</th>
                                                 <th>Price</th>
                                                 <th>Quantity</th>
+                                                <th>Shipping</th>
                                                 <th>Total</th>
                                             </tr>
                                         </thead>
                                         <tbody class="align-middle">
-                                            @foreach ($waiting as $item => $value)
+                                            <?php $quantity = 0 ?>
+                                            <?php foreach($finished as $finishedItem => $value) : ?>
                                             <tr>
                                                 <td class="align-middle"><img src="{{asset('layouts/img/product-1.jpg')}}" alt="" style="width: 50px;">{{$value->name_product}}</td>
                                                 <td class="align-middle">Rp. {{number_format($value->price,2,',','.')}}</td>
                                                 <td class="align-middle">{{$value->quantity}}</td>
-                                                <td class="align-middle">{{number_format(($value->price * $value->quantity),2,',','.')}}</td>
+                                                <td class="align-middle">Rp. {{number_format((($value->quantity * 30000)),2,',','.')}}</td>
+                                                <td class="align-middle">{{number_format(($value->price * $value->quantity + ($value->quantity * 30000)),2,',','.')}}</td>
                                             </tr>
-                                            @endforeach
+                                            <?php $quantity += $value->quantity ?>
+                                            <?php endforeach; ?>
                                         </tbody>
+                                        <tfoot class="">
+                                            <tr>
+                                                <th colspan="">Total</th>
+                                                <th></th>
+                                                <th>{{$quantity}}</th>
+                                                <th>Rp. {{number_format($item->shipping,2,',','.')}}</th>
+                                                <th>Rp. {{number_format(($item->subTotal + $item->shipping),2,',','.')}}</th>
+                                            </tr>
+                                        </tfoot>
                                     </table>
+                                    <hr>
+                                    @endforeach
                                 </div>
-                                
                             </div>
                         </div>
                     </div>

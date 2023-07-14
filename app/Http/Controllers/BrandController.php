@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use Illuminate\Http\Request;
-
+use Alert;
 class BrandController extends Controller
 {
     /**
@@ -15,7 +15,7 @@ class BrandController extends Controller
         
         $totalData = Brand::count();
 
-        $perPage = 1; 
+        $perPage = 10; 
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
         $currentPage = $page - 1;
         $offset = ($page - 1) * $perPage;
@@ -49,7 +49,7 @@ class BrandController extends Controller
         
         $category->save();
 
-        
+        Alert::success('Success', 'Successfully Added Brand');
         return redirect('/admin/brand');
     }
 
@@ -84,7 +84,7 @@ class BrandController extends Controller
     {
         $category  = Brand::find($id);
         $category->delete();
-        
+        Alert::success('Success', 'Successfully Delete Cart');
         return redirect('/admin/brand');
     }
 }

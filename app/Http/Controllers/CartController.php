@@ -6,6 +6,7 @@ use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Alert;
 
 class CartController extends Controller
 {
@@ -37,12 +38,25 @@ class CartController extends Controller
      */
     public function store($id,Request $request)
     {
-        $cart = new Cart();
-        $cart->product_id = $id;
-        $cart->user_id = Auth::user()->id;
-        $cart->quantity = $request->quantity;
-        $cart->save();
-
+        $checked = Cart::where('product_id','=',$id)->where('user_id','=',Auth::user()->id)->first();
+        
+        if(isset($checked->id)){
+            $cart = Cart::find($checked->id);
+            if(isset($request->quantity)){
+                $cart->quantity = $cart->quantity + $request->quantity;
+            }else{
+                $cart->quantity = $cart->quantity + 1;
+            }
+            $cart->save();
+            // dd($cart);
+        }else{
+            $cart = new Cart();
+            $cart->product_id = $id;
+            $cart->user_id = Auth::user()->id;
+            $cart->quantity = $request->quantity;
+            $cart->save();
+        }
+        Alert::success('Success', 'Successfully Added Cart');
         return redirect()->back();
     }
 
@@ -70,6 +84,7 @@ class CartController extends Controller
         $cart = Cart::find($id);
         $cart->quantity = $request->quantity;
         $cart->save();
+        Alert::success('Success', 'Successfully Update Cart');
         return redirect()->back();
     }
 
@@ -80,6 +95,8 @@ class CartController extends Controller
     {
         $cart = Cart::find($id);
         $cart->delete();
+        Alert::success('Success', 'Successfully Delete Data On Cart');
+
         return redirect()->back(); 
     }
 }

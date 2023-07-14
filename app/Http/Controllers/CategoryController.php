@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Alert;
 
 class CategoryController extends Controller
 {
@@ -14,8 +15,8 @@ class CategoryController extends Controller
     {
         $totalData = Category::count();
 
-        $perPage = 1; 
-        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+        $perPage = 10; 
+        $page = isset($_GET['page']) ? $_GET['page'] : 10;
         $currentPage = $page - 1;
         $offset = ($page - 1) * $perPage;
         

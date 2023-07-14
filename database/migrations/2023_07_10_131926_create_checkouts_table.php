@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('product_id');
             $table->integer('user_id');
             $table->integer('quantity');
-            $table->enum('status',['Waiting for payment','packed','in Delivery','finished']);
+            $table->enum('status',['waiting for payment','packed','in delivery','finished']);
             $table->timestamps();
         });
     }

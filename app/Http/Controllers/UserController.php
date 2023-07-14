@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\UserDetail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
+use Alert;
 class UserController extends Controller
 {
     /**
@@ -19,7 +19,7 @@ class UserController extends Controller
         $role = isset($_GET['role']) ? $_GET['role'] : '';
         $totalData = User::where('id','!=',$myId)->where('role','=',$role)->count();
 
-        $perPage = 1; 
+        $perPage = 10; 
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
         $currentPage = $page - 1;
         $offset = ($page - 1) * $perPage;
@@ -62,6 +62,7 @@ class UserController extends Controller
         $userDetail->email = $request->email;
         $userDetail->user_id = $user->id;
         $user->save();
+        Alert::success('Success', 'Successfully Added User');
         return redirect('/admin/user?role='.$request->role);
     }
 
@@ -113,6 +114,7 @@ class UserController extends Controller
         $user->delete();
         $userDetail  = UserDetail::where('user_id','=',$id);
         $userDetail->delete();
+        Alert::success('Success', 'Successfully Delete Cart');
         return redirect('/admin/user?role='.$role);
     }
 }

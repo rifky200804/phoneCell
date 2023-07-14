@@ -9,7 +9,7 @@ use App\Models\Cart;
 use App\Models\Product;
 use App\Models\UserDetail;
 use Illuminate\Support\Facades\DB;
-
+use Alert;
 class CheckoutController extends Controller
 {
     /**
@@ -17,27 +17,70 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        $waiting = DB::table('checkouts')->where('status','=','waiting for payment')
+        $processCodeWaiting =  DB::table('checkouts')->where('status','=','waiting for payment')
+                    ->where('user_id','=',Auth::user()->id)    
                     ->join('products','checkouts.product_id','=','products.id')
-                    ->select('checkouts.*','products.name as name_product','products.price as price')
-                    ->orderBy('id','DESC')
+                    ->select('checkouts.processCode','checkouts.subTotal','checkouts.shipping')->distinct()
+                    ->orderBy('checkouts.id','DESC')
                     ->get();
-        $packed = DB::table('checkouts')->where('status','=','packed')
+        // dd($processCodeWaiting);
+        
+        $waiting = DB::table('checkouts')->where('status','=','waiting for payment')
+                    ->where('user_id','=',Auth::user()->id)
                     ->join('products','checkouts.product_id','=','products.id')
-                    ->select('checkouts.*','products.name as name_product','products.price as price')
-                    ->orderBy('id','DESC')
+                    ->select('checkouts.*','products.name as name_product','products.price as price')->distinct()
+                    ->orderBy('checkouts.id','DESC')
+                    ->get();
+
+        $processCodePacked =  DB::table('checkouts')->where('status','=','packed')
+                    ->where('user_id','=',Auth::user()->id)    
+                    ->join('products','checkouts.product_id','=','products.id')->distinct()
+                    ->select('checkouts.processCode','checkouts.subTotal','checkouts.shipping')
+                    ->orderBy('checkouts.id','DESC')
+                    ->get();
+
+        $packed = DB::table('checkouts')->where('status','=','packed')
+                    ->where('user_id','=',Auth::user()->id)
+                    ->join('products','checkouts.product_id','=','products.id')->distinct()
+                    ->select('checkouts.*','products.name as name_product','products.price as price')->distinct()
+                    ->orderBy('checkouts.id','DESC')
+                    ->get();
+
+
+        $processCodeDelivery =  DB::table('checkouts')->where('status','=','in delivery')
+                    ->where('user_id','=',Auth::user()->id)    
+                    ->join('products','checkouts.product_id','=','products.id')->distinct()
+                    ->select('checkouts.processCode','checkouts.subTotal','checkouts.shipping')
+                    ->orderBy('checkouts.id','DESC')
                     ->get();
         $delivery = DB::table('checkouts')->where('status','=','in delivery')
-                    ->join('products','checkouts.product_id','=','products.id')
-                    ->select('checkouts.*','products.name as name_product','products.price as price')
-                    ->orderBy('id','DESC')
+                    ->where('user_id','=',Auth::user()->id)
+                    ->join('products','checkouts.product_id','=','products.id')->distinct()
+                    ->select('checkouts.*','products.name as name_product','products.price as price')->distinct()
+                    ->orderBy('checkouts.id','DESC')
+                    ->get();
+        
+        $processCodeFinished =  DB::table('checkouts')->where('status','=','finished')
+                    ->where('user_id','=',Auth::user()->id)    
+                    ->join('products','checkouts.product_id','=','products.id')->distinct()
+                    ->select('checkouts.processCode','checkouts.subTotal','checkouts.shipping')
+                    ->orderBy('checkouts.id','DESC')
                     ->get();
         $finished = DB::table('checkouts')->where('status','=','finished')
-                    ->join('products','checkouts.product_id','=','products.id')
-                    ->select('checkouts.*','products.name as name_product','products.price as price')
-                    ->orderBy('id','DESC')
+                    ->where('user_id','=',Auth::user()->id)
+                    ->join('products','checkouts.product_id','=','products.id')->distinct()
+                    ->select('checkouts.*','products.name as name_product','products.price as price')->distinct()
+                    ->orderBy('checkouts.id','DESC')
                     ->get();
-        return view('shop.order',compact('waiting','packed','delivery','finished'));
+        return view(
+            'shop.order',
+            compact(
+                'waiting','processCodeWaiting',
+                'packed','processCodePacked',
+                'delivery','processCodeDelivery',
+                'finished','processCodeFinished'
+            )
+        );
     }
 
     /**
@@ -81,6 +124,7 @@ class CheckoutController extends Controller
             $checkout->save();
         }
         $cart->delete();
+        Alert::success('Success', 'Successfully Checkout');
         return redirect()->route('order');
         
     }

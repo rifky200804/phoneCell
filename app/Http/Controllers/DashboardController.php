@@ -23,7 +23,7 @@ class DashboardController extends Controller
                 ";
         $categoryTotal = DB::select($queryCategoryTotal);
 
-        $products =  Product::orderBy('id','desc')->limit(10)->get();
+        $products =  Product::orderBy('id','desc')->where('stok','>',0)->limit(10)->get();
         // dd($products);
         return view('welcome',compact('categoryTotal','products'));
     }

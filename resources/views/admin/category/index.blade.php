@@ -30,6 +30,7 @@
                                 <a href="{{route('category.destroy',$value->id)}}" class="btn btn-danger rounded-pill">Delete</a>
                             </td>
                         </tr>
+                        @php $no++; @endphp
                         @endforeach
                     </tbody>
                 </table>
