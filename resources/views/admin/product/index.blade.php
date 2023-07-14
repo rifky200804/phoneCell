@@ -9,7 +9,7 @@
             <div class="table-responsive">
                 <table class="table">
                     <thead>
-                        <tr>
+                        <tr style="text-align: center">
                             <th scope="col">#</th>
                             <th scope="col">Name</th>
                             <th scope="col">Category</th>
@@ -22,7 +22,7 @@
                             $no = 1;    
                         @endphp
                         @foreach ($data as $item => $value)
-                        <tr>
+                        <tr style="text-align: center">
                             <th scope="row">{{$no}}</th>
                             <td>{{$value->name}}</td>
                             <td>{{$value->name_category}}</td>
