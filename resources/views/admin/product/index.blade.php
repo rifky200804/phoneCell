@@ -21,12 +21,12 @@
                         @php
                             $no = 1;    
                         @endphp
-                        @foreach ($data as $item => $value)
+                        @foreach ($data as $item => $value) 
                         <tr style="text-align: center">
                             <th scope="row">{{$no}}</th>
                             <td>{{$value->name}}</td>
                             <td>{{$value->name_category}}</td>
-                            <td>{{$value->name_brand}}</td>
+                            <td>{{$value->name_brand}}</td> 
                             <td>
                                 <a href="{{route('product.show',$value->id)}}" class="btn btn-info rounded-pill">Show</a>
                                 <a href="{{route('product.edit',$value->id)}}" class="btn btn-warning rounded-pill">Edit</a>
