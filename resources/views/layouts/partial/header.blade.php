@@ -1,41 +1,5 @@
 <!-- Topbar Start -->
 <div class="container-fluid">
-    <div class="row bg-secondary py-1 px-xl-5">
-        <div class="col-lg-6 d-none d-lg-block">
-            <div class="d-inline-flex align-items-center h-100">
-                {{-- <a class="text-body mr-3" href="">About</a>
-                <a class="text-body mr-3" href="">Contact</a>
-                <a class="text-body mr-3" href="">Help</a>
-                <a class="text-body mr-3" href="">FAQs</a> --}}
-            </div>
-        </div>
-        <div class="col-lg-6 text-center text-lg-right">
-            <div class="d-inline-flex align-items-center">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        @if (isset(Auth::user()->role))
-                        <a class="dropdown-item" href="">My Profile</a>
-                        <a class="dropdown-item" href="{{route('logout')}}">Logout</a>
-                        @else
-                        <a class="dropdown-item" href="{{url('/user/login')}}">Sign in</a>
-                        <a class="dropdown-item" href="{{url('/register')}}">Sign up</a>
-                        @endif
-                    </div>
-                </div>
-            </div>
-            <div class="d-inline-flex align-items-center d-block d-lg-none">
-                <a href="" class="btn px-0 ml-2">
-                    <i class="fas fa-heart text-dark"></i>
-                    <span class="badge text-dark border border-dark rounded-circle" style="padding-bottom: 2px;">0</span>
-                </a>
-                <a href="" class="btn px-0 ml-2">
-                    <i class="fas fa-shopping-cart text-dark"></i>
-                    <span class="badge text-dark border border-dark rounded-circle" style="padding-bottom: 2px;">0</span>
-                </a>
-            </div>
-        </div>
-    </div>
     <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
         <div class="col-lg-4">
             <a href="" class="text-decoration-none">
@@ -95,6 +59,7 @@
                     <div class="navbar-nav mr-auto py-0">
                         <a href="{{route('welcome')}}" class="nav-item nav-link @if(Request::url() == route('welcome')) active @endif">Home</a>
                         <a href="{{route('shop.index')}}" class="nav-item nav-link @if(Request::url() == route('shop.index')) active @endif">Shop</a>       
+                        <a href="{{route('order')}}" class="nav-item nav-link @if(Request::url() == route('order')) active @endif">My Order</a>       
                     </div>
                     <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
                         <a href="{{url('/cart')}}" class="btn px-0 ml-3">
@@ -110,6 +75,20 @@
                                 @endif
                             </span>
                         </a>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                                <i class="fas fa-user text-primary"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                @if (isset(Auth::user()->role))
+                                <a class="dropdown-item" href="">My Profile</a>
+                                <a class="dropdown-item" href="{{route('logout')}}">Logout</a>
+                                @else
+                                <a class="dropdown-item" href="{{url('/user/login')}}">Sign in</a>
+                                <a class="dropdown-item" href="{{url('/register')}}">Sign up</a>
+                                @endif
+                            </div>
+                        </div>
                     </div>
                 </div>
             </nav>

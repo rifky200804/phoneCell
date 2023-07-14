@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\UserDetail;
+use Illuminate\Support\Facades\DB;
 
 class CheckoutController extends Controller
 {
@@ -16,7 +17,27 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        //
+        $waiting = DB::table('checkouts')->where('status','=','waiting for payment')
+                    ->join('products','checkouts.product_id','=','products.id')
+                    ->select('checkouts.*','products.name as name_product','products.price as price')
+                    ->orderBy('id','DESC')
+                    ->get();
+        $packed = DB::table('checkouts')->where('status','=','packed')
+                    ->join('products','checkouts.product_id','=','products.id')
+                    ->select('checkouts.*','products.name as name_product','products.price as price')
+                    ->orderBy('id','DESC')
+                    ->get();
+        $delivery = DB::table('checkouts')->where('status','=','in delivery')
+                    ->join('products','checkouts.product_id','=','products.id')
+                    ->select('checkouts.*','products.name as name_product','products.price as price')
+                    ->orderBy('id','DESC')
+                    ->get();
+        $finished = DB::table('checkouts')->where('status','=','finished')
+                    ->join('products','checkouts.product_id','=','products.id')
+                    ->select('checkouts.*','products.name as name_product','products.price as price')
+                    ->orderBy('id','DESC')
+                    ->get();
+        return view('shop.order',compact('waiting','packed','delivery','finished'));
     }
 
     /**
@@ -54,12 +75,13 @@ class CheckoutController extends Controller
             $checkout->shipping = $request->shipping;
             $checkout->subTotal = $request->subTotal;
             $checkout->product_id = $value->product_id;
+            $checkout->quantity = $value->quantity;
             $checkout->user_id = $myId;
             $checkout->status = 'Waiting for payment';
             $checkout->save();
         }
         $cart->delete();
-        return redirect()->route('welcome');
+        return redirect()->route('order');
         
     }
 

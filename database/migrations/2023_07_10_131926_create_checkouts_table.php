@@ -18,6 +18,7 @@ return new class extends Migration
             $table->bigInteger('subTotal');
             $table->integer('product_id');
             $table->integer('user_id');
+            $table->integer('quantity');
             $table->enum('status',['Waiting for payment','packed','in Delivery','finished']);
             $table->timestamps();
         });
