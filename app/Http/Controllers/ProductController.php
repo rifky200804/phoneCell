@@ -19,7 +19,7 @@ class ProductController extends Controller
         $table = DB::table('products')
                     ->select('products.*','categories.name as name_category','brands.name as name_brand','brands.id as brand_id')
                     ->join('categories','products.categories_id','=','categories.id')
-                    ->join('brands','products.categories_id','=','brands.id')
+                    ->join('brands','products.brand_id','=','brands.id')
                     ->where('stok','>',0);
         if (isset($_GET['price'])) {
             $price = $_GET['price'];
@@ -45,7 +45,6 @@ class ProductController extends Controller
         if (isset($_GET['categories']) && $_GET['categories'] != '') {
             $table = $table->where('categories.name', '=', $_GET['categories']);
         }
-        $checkedBrand = [];
         if (isset($_GET['brand']) && $_GET['brand'] != '') {
             $checkedBrand = $_GET['brand'];
             if (gettype($checkedBrand) == 'string') {
@@ -88,6 +87,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         // $this->validate($request,[
         //     'name'=>'required',
         //     'price'=>'required',
@@ -103,10 +103,10 @@ class ProductController extends Controller
         $product->stok = $request->stok;
         $product->description = $request->description;
         // $product->foto = $request->foto;
-        $product->brand_id = $request->brand_id;
-        $product->categories_id = $request->categories_id;
+        $product->brand_id = (int) $request->brand;
+        $product->categories_id = $request->category;
 
-        
+        // dd($product);
         $product->save();
 
         
@@ -118,17 +118,29 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $data = Product::find($id);
+        $data = DB::table('products')
+        ->select('products.*','categories.name as name_category','brands.name as name_brand','brands.id as brand_id')
+        ->join('categories','products.categories_id','=','categories.id')
+        ->join('brands','products.categories_id','=','brands.id')
+        ->where('id','=',$id);
         $categories = DB::table('categories')->get();
-        return view('shop.show', compact('data', 'categories'));
+        $brands = DB::table('brands')->get();
+        return view('shop.show', compact('data', 'categories','brands'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
-        //
+        $data = DB::table('products')
+        ->select('products.*','categories.name as name_category','brands.name as name_brand','brands.id as brand_id')
+        ->join('categories','products.categories_id','=','categories.id')
+        ->join('brands','products.categories_id','=','brands.id')
+        ->where('id','=',$id);
+        $categories = DB::table('categories')->get();
+        $brands = DB::table('brands')->get();
+        return view('shop.edit', compact('data', 'categories','brands'));
     }
 
     /**

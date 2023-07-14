@@ -54,13 +54,12 @@
                         <label for="brand_id">Brand</label>
                     </div>
                     <div class="col-8 col-md-8 col-sm-12 col-sm-12">
-                        <select name="brand" class="form-control">
-                            <option value="">Pilih Brand</option>
+                        <select class="form-select mb-3" aria-label="Default select example" name="brand">
+                            <option selected="" disabled="">--Select Brand--</option>
                             @foreach($brands as $brand)
                                 <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                             @endforeach
                         </select>
-                        
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -68,13 +67,12 @@
                         <label for="categories_id">Categories</label>
                     </div>
                     <div class="col-8 col-md-8 col-sm-12 col-sm-12">
-                        <select name="category" class="form-control">
-                            <option value="">Pilih Category</option>
+                        <select class="form-select mb-3" aria-label="Default select example" name="category">
+                            <option selected="" disabled="">--Select Category--</option>
                             @foreach($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
-                        
                     </div>
                 </div>
                 <div class="row mb-3">

@@ -4,25 +4,39 @@
 @section('content')
     <div class="container-fluid pt-4 px-4">
         <div class="bg-light rounded h-100 p-4">
-            <h6>Data Brand</h6>
+            <h6>Data Product</h6>
             <a href="{{route('product.create')}}">Create Product</a>
             <div class="table-responsive">
-                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Brand</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         @php
                             $no = 1;    
                         @endphp
                         @foreach ($data as $item => $value)
-                        <hr>
-                            
-                            <h3 style="text-align: center">{{$value->name}}</h3>
-                            
-                                {{-- <a href="{{route('product.show',$value->id)}}" class="btn btn-info rounded-pill">Show</a> --}}
-                                {{-- <a href="{{route('product.edit',$value->id)}}" class="btn btn-warning rounded-pill">Edit</a> --}}
+                        <tr>
+                            <th scope="row">{{$no}}</th>
+                            <td>{{$value->name}}</td>
+                            <td>{{$value->name_category}}</td>
+                            <td>{{$value->name_brand}}</td>
+                            <td>
+                                <a href="{{route('product.show',$value->id)}}" class="btn btn-info rounded-pill">Show</a>
+                                <a href="{{route('product.edit',$value->id)}}" class="btn btn-warning rounded-pill">Edit</a>
                                 <a href="{{route('product.destroy',$value->id)}}" class="btn btn-danger rounded-pill">Delete</a>
-                          
+                            </td>
+                        </tr>
                         @endforeach
-                   
-                {{-- <div class="row">
+                    </tbody>
+                </table>
+                <div class="row">
                     <div class="col-md-6 d-flex justify-content-start">
                         Page {{$page}} from {{$totalPage}} With {{$totalData}} Data
                     </div>
@@ -63,7 +77,7 @@
                             @endif
                         </div>
                     </div>
-                </div> --}}
+                </div>
             </div>
         </div>
     </div>
