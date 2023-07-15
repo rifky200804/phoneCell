@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Alert;
 
 class AuthController extends Controller
 {
@@ -32,16 +33,20 @@ class AuthController extends Controller
         }
         if(Auth::attempt($request->only('email','password'))){
             if($role == 'admin'){
+                Alert::success('Success', 'Successfully Login');
                 return redirect()->route('admin.dashboard');
             }else{
+                Alert::success('Success', 'Successfully Login');
                 return redirect()->route('welcome');
             }
         }else{
+            Alert::error('Failed', 'Failed Login');
             return back();
         }
     }
     public function logout(){
         Auth::logout();
+        Alert::success('Success', 'Successfully Logout');
         return redirect()->route('welcome');
     }
 
@@ -53,14 +58,14 @@ class AuthController extends Controller
             'full_name'=>'required',
             'email'=>'required',
             'password'=> 'required',
-            'role'=>'required'
         ]);
         $user = new User();
         $user->name = $request->full_name;
         $user->email = $request->email;
-        $user->role = $request->role;
+        $user->role = 'pelanggan';
         $user->password = Hash::make($request->password);
         $user->save();
-        return redirect()->back();
+        Alert::success('Success', 'Successfully Register');
+        return redirect()->route('login','user');
     }
 }

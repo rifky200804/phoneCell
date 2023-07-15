@@ -20,7 +20,8 @@
   </head>
   <body>
   
-
+    @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
+    @include('sweetalert::alert')
   <div class="d-md-flex half">
     <div class="bg" style="background-image: url('{{asset('login/images/bg_1.jpg')}}');"></div>
     <div class="contents">
@@ -33,7 +34,8 @@
               <h3>Register to <strong>PhoneCell</strong></h3>
               <!-- <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p> -->
               </div>
-              <form action="#" method="post">
+              <form action="{{route('postRegister')}}" method="post">
+                @csrf
                 <div class="form-group first">
                   <label for="full_name">Full Name</label>
                   <input type="text" name="full_name" class="form-control" placeholder="Your Name" id="full_name">
@@ -44,7 +46,7 @@
                 </div>
                 <div class="form-group last mb-3">
                   <label for="password">Password</label>
-                  <input type="password" class="form-control" placeholder="Your Password" id="password">
+                  <input type="password" class="form-control" placeholder="Your Password" name="password" id="password">
                 </div>
                 
                 <div class="d-sm-flex mb-5 align-items-center">
@@ -57,6 +59,9 @@
                 
                 <button type="submit" class="btn btn-block btn-primary">Register</button>
               </form>
+              <a href="{{route('login','user')}}" class="text-primary">
+                already have an account
+              </a>
             </div>
           </div>
         </div>

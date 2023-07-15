@@ -20,7 +20,8 @@
   </head>
   <body>
   
-
+    @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
+    @include('sweetalert::alert')
   <div class="d-lg-flex half">
     <div class="bg order-1 order-md-2" style="background-image: url('{{asset('login/images/bg_1.jpg')}}');"></div>
     <div class="contents order-2 order-md-1">
@@ -29,7 +30,7 @@
         <div class="row align-items-center justify-content-center">
           <div class="col-md-7">
             <h3>Login to <strong>PhoneCell</strong></h3>
-            <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>
+            {{-- <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p> --}}
             <form action="{{route('postlogin','user')}}" method="post">
                 @csrf
               <div class="form-group first">
@@ -50,11 +51,14 @@
               </div>
 
               <button type="submit" class="btn btn-block btn-primary">Login</button>
-              <a href="{{route('login','admin')}}" class="btn btn-block btn-secondary">
-                <label for="" style="color:white;">
-                  Login as Admin
-                </label>
-              </a>
+              <div class="d-flex justify-content-between">
+                <a href="{{route('login','admin')}}" class="text-primary">
+                    Login as Admin
+                </a>
+                <a href="{{route('register')}}" class="text-primary">
+                  don't have account
+                </a>
+              </div>
 
             </form>
           </div>
