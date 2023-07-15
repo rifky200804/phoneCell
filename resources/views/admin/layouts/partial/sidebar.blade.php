@@ -36,7 +36,14 @@
                 <a href="{{ route('brand.index') }}"
                     class="nav-item nav-link @if (Request::url() == route('brand.index')) active @endif"><i
                         class="fa fa-table me-2 "></i>Brand</a>
-
+                <a href="#" class="nav-link dropdown-toggle @if (Request::url() == route('order.index')) active @endif"
+                    data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-laptop me-2"></i>Data Order</a>
+                    <div class="dropdown-menu bg-transparent border-0" data-bs-popper="none">
+                        <a href="{{ url('/admin/order?status=waiting for payment') }}" class="dropdown-item">Waiting For Payment</a>
+                        <a href="{{ url('/admin/order?status=packed') }}" class="dropdown-item">Packed</a>
+                        <a href="{{ url('/admin/order?status=in delivery') }}" class="dropdown-item">in delivery</a>
+                        <a href="{{ url('/admin/order?status=finished') }}" class="dropdown-item">finished</a>
+                    </div>
             </div>
             {{-- <a href="{{route('user.index')}}" class="nav-item nav-link @if (Request::url() == route('user.index')) active @endif"><i class="fa fa-user-alt me-2"></i>User</a> --}}
         </div>

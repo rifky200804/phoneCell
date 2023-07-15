@@ -93,7 +93,6 @@ class ProductController extends Controller
             'price'=>'required',
             'stok'=>'required',
             'description'=>'required',
-            // 'foto'=>'required',
             'brand'=>'required',
             'categories'=>'required'
         ]);
@@ -102,7 +101,16 @@ class ProductController extends Controller
         $product->price = $request->price;
         $product->stok = $request->stok;
         $product->description = $request->description;
-        // $product->foto = $request->foto;
+        if($request->foto > 0){
+            $foto = $request->foto_1;
+            $v_foto = time().rand(100,999).".".$foto->getClientOriginalName();
+        }
+        if(isset($v_foto)){
+            $category->foto = $v_foto;
+        }
+        if(isset($foto)){
+            $foto->move(public_path().'/images_product',$v_foto);
+        }
         $product->brand_id = (int) $request->brand;
         $product->categories_id = $request->category;        
         // dd($product);

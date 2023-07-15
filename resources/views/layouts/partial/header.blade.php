@@ -81,7 +81,7 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
                                 @if (isset(Auth::user()->role))
-                                <a class="dropdown-item" href="">My Profile</a>
+                                <a class="dropdown-item" href="{{route('myProfile',Auth::user()->id)}}">My Profile</a>
                                 <a class="dropdown-item" href="{{route('logout')}}">Logout</a>
                                 @else
                                 <a class="dropdown-item" href="{{url('/user/login')}}">Sign in</a>

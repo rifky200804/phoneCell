@@ -42,11 +42,21 @@ class BrandController extends Controller
     {
         $this->validate($request,[
             'name'=>'required',
-            
         ]);
+
+        
         $category = new Brand();
         $category->name = $request->name;
-        
+        if($request->foto > 0){
+            $foto = $request->foto_1;
+            $v_foto = time().rand(100,999).".".$foto->getClientOriginalName();
+        }
+        if(isset($v_foto)){
+            $category->foto = $v_foto;
+        }
+        if(isset($foto)){
+            $foto->move(public_path().'/images_brand',$v_foto);
+        }
         $category->save();
 
         Alert::success('Success', 'Successfully Added Brand');

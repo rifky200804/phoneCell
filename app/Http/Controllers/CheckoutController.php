@@ -47,7 +47,7 @@ class CheckoutController extends Controller
                     ->get();
 
 
-        $processCodeDelivery =  DB::table('checkouts')->where('status','=','in delivery')
+        $processCodeDelivery =  DB::table('checkouts')->where('status','=','in Delivery')
                     ->where('user_id','=',Auth::user()->id)    
                     ->join('products','checkouts.product_id','=','products.id')->distinct()
                     ->select('checkouts.processCode','checkouts.subTotal','checkouts.shipping')
