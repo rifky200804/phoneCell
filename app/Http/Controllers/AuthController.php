@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Alert;
+use App\Models\UserDetail;
 
 class AuthController extends Controller
 {
@@ -65,6 +66,11 @@ class AuthController extends Controller
         $user->role = 'pelanggan';
         $user->password = Hash::make($request->password);
         $user->save();
+        $userDetail = new UserDetail();
+        $userDetail->full_name = $request->full_name;
+        $userDetail->email = $request->email;
+        $userDetail->user_id = $user->id;
+        $userDetail->save();
         Alert::success('Success', 'Successfully Register');
         return redirect()->route('login','user');
     }

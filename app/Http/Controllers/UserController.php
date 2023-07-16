@@ -46,7 +46,7 @@ class UserController extends Controller
     {
         $this->validate($request,[
             'full_name'=>'required',
-            'email'=>'required',
+            'email'=>'required|unique:users',
             'password'=> 'required',
             'role'=>'required'
         ]);
@@ -58,7 +58,7 @@ class UserController extends Controller
         $user->save();
 
         $userDetail = new UserDetail();
-        $userDetail->name = $request->full_name;
+        $userDetail->full_name = $request->full_name;
         $userDetail->email = $request->email;
         $userDetail->user_id = $user->id;
         $user->save();

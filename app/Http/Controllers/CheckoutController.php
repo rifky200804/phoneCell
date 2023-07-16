@@ -98,7 +98,8 @@ class CheckoutController extends Controller
     {
         $myId = Auth::user()->id;
         $userDetail = UserDetail::where('user_id','=',$myId)->first();
-        if($userDetail->address == null || $userDetail->address == ''){
+        // dd($userDetail);
+        if($userDetail->address == 'null' || $userDetail->address == ''){
             return redirect()->route('myProfile',$userDetail->id);
         }
         // dd($userDetail);
@@ -109,7 +110,8 @@ class CheckoutController extends Controller
         foreach($getCart as $item => $value){
             $cartById = Cart::find($value->id);
             // pengurangan sisa stok
-            $product = Product::find($value->id);
+            $product = Product::find($value->product_id);
+            // dd($product);
             $product->stok = $product->stok - $cartById->quantity;
             $product->save();
             // save to table schekout
