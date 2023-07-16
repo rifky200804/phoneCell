@@ -94,7 +94,7 @@ class ProductController extends Controller
             'stok'=>'required',
             'description'=>'required',
             'brand'=>'required',
-            'categories'=>'required'
+            'category'=>'required'
         ]);
         $product = new Product();
         $product->name = $request->name;
@@ -198,6 +198,7 @@ class ProductController extends Controller
     {
         $product  = Product::find($id);
         $product->delete();
+        Alert::success('Success', 'Successfully Deleted Product');
         
         return redirect('/admin/product');
     }
