@@ -22,7 +22,7 @@
                         $status = [
                             'waiting for payment',
                             'packed',
-                            'in Delivery',
+                            'in delivery',
                             'finished'
                         ];
                     @endphp
