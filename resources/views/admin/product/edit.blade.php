@@ -7,7 +7,7 @@
     <div class="container-fluid pt-4 px-4">
         <div class="bg-light rounded h-100 p-4">
             <h6>Edit Data Product</h6>
-            <form action="{{route('product.update',$data->id)}}" method="post">
+            <form action="{{route('product.update',$data->id)}}" method="post" enctype='multipart/form-data'>
                 @csrf
                 @method('put')
                 <div class="row mb-3">
@@ -74,6 +74,14 @@
                                 <option value="{{ $category->id }}" @if($category->id == $data->categories_id) selected @endif>{{ $category->name }}</option>
                             @endforeach
                         </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-4 col-md-4 col-sm-12 col-sm-12">
+                        <label for="foto">foto</label>
+                    </div>
+                    <div class="col-8 col-md-8 col-sm-12 col-sm-12">
+                        <input type="file" name="foto" id="foto" class="form-control">
                     </div>
                 </div>
                 <div class="row mb-3">

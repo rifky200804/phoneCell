@@ -77,7 +77,7 @@ class UserDetailController extends Controller
             $userDetail->profile = $nameFile;
         }
         $userDetail->save();
-        Alert::success('Success', 'Successfully Update Datas');
+        Alert::success('Success', 'Successfully Update Data');
         return redirect()->back();
     }
 

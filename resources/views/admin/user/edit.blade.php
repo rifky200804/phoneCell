@@ -7,7 +7,7 @@
     <div class="container-fluid pt-4 px-4">
         <div class="bg-light rounded h-100 p-4">
             <h6>Edit Data User</h6>
-            <form action="{{route('user.edit',$data->id)}}" method="post">
+            <form action="{{route('myProfile.update',$data->id)}}" method="post">
                 @csrf
                 @method('put')
                 <div class="row mb-3">

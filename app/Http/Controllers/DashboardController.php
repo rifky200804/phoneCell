@@ -4,12 +4,39 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Auth;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
     public function index(){
-        return view('admin.dashboard');
+        
+        $waiting = DB::table('checkouts')->where('status','=','waiting for payment')
+                    ->join('products','checkouts.product_id','=','products.id')
+                    ->select('checkouts.*','products.name as name_product','products.price as price')->distinct()
+                    ->orderBy('checkouts.id','DESC')
+                    ->count();
+
+
+        $packed = DB::table('checkouts')->where('status','=','packed')
+                    ->join('products','checkouts.product_id','=','products.id')->distinct()
+                    ->select('checkouts.*','products.name as name_product','products.price as price')->distinct()
+                    ->orderBy('checkouts.id','DESC')
+                    ->count();
+
+
+        $delivery = DB::table('checkouts')->where('status','=','in delivery')
+                    ->join('products','checkouts.product_id','=','products.id')->distinct()
+                    ->select('checkouts.*','products.name as name_product','products.price as price')->distinct()
+                    ->orderBy('checkouts.id','DESC')
+                    ->count();
+        
+        $finished = DB::table('checkouts')->where('status','=','finished')
+                    ->join('products','checkouts.product_id','=','products.id')->distinct()
+                    ->select('checkouts.*','products.name as name_product','products.price as price')->distinct()
+                    ->orderBy('checkouts.id','DESC')
+                    ->count();
+        return view('admin.dashboard',compact('waiting','packed','delivery','finished'));
     }
 
     public function welcome(Request $request){

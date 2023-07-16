@@ -38,7 +38,7 @@
                         <form action="{{route('cart.update',$value->id)}}" method="POST">
                         @csrf
                         @method('PUT')
-                        <td class="align-middle"><img src="{{asset('layouts/img/product-1.jpg')}}" alt="" style="width: 50px;">{{$value->name_product}}</td>
+                        <td class="align-middle"><img src="@if(isset($value->foto)) {{asset('/images_product/'.$value->foto)}} @else {{asset('logo.jpg')}} @endif" alt="" style="width: 50px;">{{$value->name_product}}</td>
                         <td class="align-middle">Rp. {{number_format($value->price,2,',','.')}}</td>
                         <td class="align-middle">
                             <div class="input-group quantity mx-auto" style="width: 100px;">

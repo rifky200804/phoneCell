@@ -109,7 +109,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
                     <div class="product-item bg-light mb-4">
                         <div class="product-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="{{asset('layouts/img/product-1.jpg')}}" alt="">
+                            <img class="img-fluid w-100" src="@if(isset($value->foto)) {{asset('/images_product/'.$value->foto)}} @else {{asset('logo.jpg')}} @endif"" alt="">
                             <div class="product-action">
                                 <form action="{{url('/cart/'.$value->id)}}" method="POST">
                                     @csrf

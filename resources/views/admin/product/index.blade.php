@@ -28,7 +28,7 @@
                             <td>{{$value->name_category}}</td>
                             <td>{{$value->name_brand}}</td>
                             <td>
-                                <a href="{{route('product.show',$value->id)}}" class="btn btn-info rounded-pill">Show</a>
+                                <a href="{{route('product.showAdmin',$value->id)}}" class="btn btn-info rounded-pill">Show</a>
                                 <a href="{{route('product.edit',$value->id)}}" class="btn btn-warning rounded-pill">Edit</a>
                                 <a href="{{route('product.destroy',$value->id)}}" class="btn btn-danger rounded-pill">Delete</a>
                             </td>

@@ -76,6 +76,14 @@
                     </div>
                 </div>
                 <div class="row mb-3">
+                    <div class="col-4 col-md-4 col-sm-12 col-sm-12">
+                        <label for="foto">foto</label>
+                    </div>
+                    <div class="col-8 col-md-8 col-sm-12 col-sm-12">
+                        <input type="file" name="foto" id="foto" class="form-control">
+                    </div>
+                </div>
+                <div class="row mb-3">
                     <div class="col-6 col-md-6 col-sm-12 d-flex justify-content-start">
                         <a href="{{route('product.index')}}" class="btn btn-primary">Back</a>
                     </div>

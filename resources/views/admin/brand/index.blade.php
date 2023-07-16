@@ -25,7 +25,7 @@
                             <th scope="row">{{$no}}</th>
                             <td>{{$value->name}}</td>
                             <td>
-                                {{-- <a href="{{route('brand.show',$value->id)}}" class="btn btn-info rounded-pill">Show</a> --}}
+                                <a href="{{route('brand.show',$value->id)}}" class="btn btn-info rounded-pill">Show</a>
                                 {{-- <a href="{{route('brand.edit',$value->id)}}" class="btn btn-warning rounded-pill">Edit</a> --}}
                                 <a href="{{route('brand.destroy',$value->id)}}" class="btn btn-danger rounded-pill">Delete</a>
                             </td>

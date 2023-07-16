@@ -16,7 +16,8 @@ class CategoryController extends Controller
         $totalData = Category::count();
 
         $perPage = 10; 
-        $page = isset($_GET['page']) ? $_GET['page'] : 10;
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+        // dd($page);
         $currentPage = $page - 1;
         $offset = ($page - 1) * $perPage;
         

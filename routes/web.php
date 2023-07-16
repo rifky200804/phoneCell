@@ -70,7 +70,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/', [ProductController::class, 'index'])->name('index');
             Route::get('/create', [ProductController::class, 'create'])->name('create');
             Route::post('/', [ProductController::class, 'store'])->name('store');
-            Route::get('/{id}', [ProductController::class, 'show'])->name('show');
+            Route::get('/{id}', [ProductController::class, 'showAdmin'])->name('showAdmin');
             Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('edit');
             Route::put('/update/{id}', [ProductController::class, 'update'])->name('update');
             Route::get('/delete/{id}', [ProductController::class, 'destroy'])->name('destroy');

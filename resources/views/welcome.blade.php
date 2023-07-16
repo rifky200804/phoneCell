@@ -11,7 +11,7 @@
             <a class="text-decoration-none" href="">
                 <div class="cat-item d-flex align-items-center mb-4">
                     <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                        <img class="img-fluid" src="{{asset('layouts/img/cat-2.jpg')}}" alt="">
+                        <img class="img-fluid" src="@if(isset($item->foto)) {{asset('/images_product/'.$item->foto)}} @else {{asset('logo.jpg')}} @endif" alt="">
                     </div>
                     <div class="flex-fill pl-3">
                         <h6>{{$item->name_category}}</h6>
@@ -33,7 +33,7 @@
         <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
             <div class="product-item bg-light mb-4">
                 <div class="product-img position-relative overflow-hidden">
-                    <img class="img-fluid w-100" src="{{asset('layouts/img/product-1.jpg')}}" alt="">
+                    <img class="img-fluid w-100" src="@if(isset($data->foto)) {{asset('/images_product/'.$data->foto)}} @else {{asset('logo.jpg')}} @endif" alt="">
                     <div class="product-action">
                         <form action="{{url('/cart/'.$value->id)}}" method="POST">
                             @csrf

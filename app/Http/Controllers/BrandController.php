@@ -44,20 +44,19 @@ class BrandController extends Controller
             'name'=>'required',
         ]);
 
-        
-        $category = new Brand();
-        $category->name = $request->name;
-        if($request->foto > 0){
-            $foto = $request->foto_1;
+        $brand = new Brand();
+        $brand->name = $request->name;
+        if(isset($request->foto)){
+            $foto = $request->foto;
             $v_foto = time().rand(100,999).".".$foto->getClientOriginalName();
         }
         if(isset($v_foto)){
-            $category->foto = $v_foto;
+            $brand->foto = $v_foto;
         }
         if(isset($foto)){
             $foto->move(public_path().'/images_brand',$v_foto);
         }
-        $category->save();
+        $brand->save();
 
         Alert::success('Success', 'Successfully Added Brand');
         return redirect('/admin/brand');
@@ -66,9 +65,10 @@ class BrandController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Brand $brand)
+    public function show($id)
     {
-        //
+        $data = Brand::find($id);
+        return view('admin.brand.show',compact('data'));
     }
 
     /**

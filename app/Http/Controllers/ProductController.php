@@ -101,12 +101,12 @@ class ProductController extends Controller
         $product->price = $request->price;
         $product->stok = $request->stok;
         $product->description = $request->description;
-        if($request->foto > 0){
-            $foto = $request->foto_1;
+        if(isset($request->foto)){
+            $foto = $request->foto;
             $v_foto = time().rand(100,999).".".$foto->getClientOriginalName();
         }
         if(isset($v_foto)){
-            $category->foto = $v_foto;
+            $product->foto = $v_foto;
         }
         if(isset($foto)){
             $foto->move(public_path().'/images_product',$v_foto);
@@ -137,6 +137,15 @@ class ProductController extends Controller
         return view('shop.show', compact('data', 'categories','brands'));
     }
 
+    public function showAdmin($id){
+        $data = DB::table('products')
+        ->select('products.*','categories.name as name_category','brands.name as name_brand','brands.id as brand_id')
+        ->join('categories','products.categories_id','=','categories.id')
+        ->join('brands','products.categories_id','=','brands.id')
+        ->where('products.id','=',$id)->first();
+        // dd($data);
+        return view('admin.product.show', compact('data'));
+    }
     /**
      * Show the form for editing the specified resource.
      */
@@ -162,7 +171,16 @@ class ProductController extends Controller
         $product->price = $request->price;
         $product->stok = $request->stok;
         $product->description = $request->description;
-        // $product->foto = $request->foto;
+        if(isset($request->foto)){
+            $foto = $request->foto;
+            $v_foto = time().rand(100,999).".".$foto->getClientOriginalName();
+        }
+        if(isset($v_foto)){
+            $product->foto = $v_foto;
+        }
+        if(isset($foto)){
+            $foto->move(public_path().'/images_product',$v_foto);
+        }
         $product->brand_id = (int) $request->brand;
         $product->categories_id = $request->category;
 
